@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 
 locals {
   engine = (
-    (var.engine == "postgres") ? "aurora-postgresql" : null ||
+    (var.engine == "postgres") ? "aurora-postgresql" : false ||
     (var.engine == "mysql") ? "aurora-mysql" : null
   )
 }
