@@ -5,9 +5,20 @@ resource "aws_db_parameter_group" "main" {
 
   dynamic "parameter" {
     for_each = (var.aurora_cluster == false && var.engine == "postgres") ? [true] : []
+
     content {
       name  = "rds.force_ssl"
       value = "1"
+    }
+  }
+
+  dynamic "parameter" {
+    for_each = var.parameter
+
+    content {
+      name = parameter.value.name
+      value = parameter.value.value
+      apply_method = parameter.value.apply_method
     }
   }
 

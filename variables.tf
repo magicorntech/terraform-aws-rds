@@ -34,3 +34,4 @@ variable "max_allocated_storage" {}
 variable "storage_type" {}
 variable "storage_throughput" {}
 variable "parameter_group" {}
+variable "parameter" {}

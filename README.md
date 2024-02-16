@@ -5,7 +5,7 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "rds" {
   source         = "magicorntech/rds/aws"
-  version        = "0.0.5"
+  version        = "0.0.6"
   tenant         = var.tenant
   name           = var.name
   environment    = var.environment
@@ -31,6 +31,18 @@ module "rds" {
   auto_minor_version_upgrade  = false
   deletion_protection         = true
   apply_immediately           = true
+  parameter                   = [
+    {
+      name = "lower_case_table_names"
+      value = 1
+      apply_method = "pending-reboot"
+    },
+    {
+      name = "max_allowed_packet"
+      value = 1073741824
+      apply_method = "immediate"
+    }
+  ]
 
   # RDS Configuration (If == Aurora)
   replica_count          = 2 # needed for read replicas managed outside autoscaling.
