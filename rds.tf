@@ -20,6 +20,7 @@ resource "aws_db_instance" "main" {
   kms_key_id                  = (var.encryption == true) ? var.kms_key_id : null
   storage_type                = var.storage_type
   storage_throughput          = var.storage_throughput
+  multi_az                    = var.multi_az
   allocated_storage           = var.allocated_storage
   max_allocated_storage       = var.max_allocated_storage
   final_snapshot_identifier   = "${var.tenant}-${var.name}-${var.database_name}-final-${random_id.backup.hex}-${var.environment}"
@@ -79,8 +80,8 @@ resource "aws_rds_cluster" "main" {
 }
 
 resource "aws_rds_cluster_instance" "main" {
-  count                      = (var.aurora_cluster == true && var.multi_az == true) ? var.replica_count+1 : 0
-  identifier                 = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index+1}"
+  count                      = (var.aurora_cluster == true && var.multi_az == true) ? var.replica_count + 1 : 0
+  identifier                 = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index + 1}"
   instance_class             = var.instance_type
   cluster_identifier         = aws_rds_cluster.main[0].id
   engine                     = aws_rds_cluster.main[0].engine
@@ -93,7 +94,7 @@ resource "aws_rds_cluster_instance" "main" {
   apply_immediately          = var.apply_immediately
 
   tags = {
-    Name        = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index+1}"
+    Name        = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index + 1}"
     Tenant      = var.tenant
     Project     = var.name
     Environment = var.environment

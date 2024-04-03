@@ -16,8 +16,8 @@ resource "aws_db_parameter_group" "main" {
     for_each = var.parameter
 
     content {
-      name = parameter.value.name
-      value = parameter.value.value
+      name         = parameter.value.name
+      value        = parameter.value.value
       apply_method = parameter.value.apply_method
     }
   }

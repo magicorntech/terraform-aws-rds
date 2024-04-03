@@ -46,7 +46,7 @@ module "rds" {
 
   # RDS Configuration (If == Aurora)
   replica_count          = 2 # needed for read replicas managed outside autoscaling.
-  replica_autoscaling    = true
+  replica_autoscaling    = false
   replica_min            = 1
   replica_max            = 15
   target_value           = 50
