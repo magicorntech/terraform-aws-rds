@@ -6,6 +6,10 @@ locals {
     (var.engine == "postgres") ? "aurora-postgresql" : false ||
     (var.engine == "mysql") ? "aurora-mysql" : null
   )
+  node_count = (
+    (var.aurora_cluster == true && var.multi_az == true) ? var.replica_count + 1 : false ||
+    (var.aurora_cluster == true && var.multi_az == false) ? 1 : null
+  )
 }
 
 resource "random_string" "dbname" {

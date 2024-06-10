@@ -80,7 +80,7 @@ resource "aws_rds_cluster" "main" {
 }
 
 resource "aws_rds_cluster_instance" "main" {
-  count                      = (var.aurora_cluster == true && var.multi_az == true) ? var.replica_count + 1 : 0
+  count                      = local.node_count
   identifier                 = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index + 1}"
   instance_class             = var.instance_type
   cluster_identifier         = aws_rds_cluster.main[0].id
