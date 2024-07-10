@@ -8,7 +8,7 @@ locals {
   )
   node_count = (
     (var.aurora_cluster == true && var.multi_az == true) ? var.replica_count + 1 : false ||
-    (var.aurora_cluster == true && var.multi_az == false) ? 1 : null
+    (var.aurora_cluster == true && var.multi_az == false) ? 1 : 0
   )
 }
 
