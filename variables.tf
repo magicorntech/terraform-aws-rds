@@ -20,6 +20,7 @@ variable "backup_retention_period" {}
 variable "allow_major_version_upgrade" {}
 variable "auto_minor_version_upgrade" {}
 variable "deletion_protection" {}
+variable "performance_insights_enabled" {}
 variable "apply_immediately" {}
 variable "replica_count" {}
 variable "replica_autoscaling" {}
