@@ -5,7 +5,7 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "rds" {
   source         = "magicorntech/rds/aws"
-  version        = "0.0.8"
+  version        = "0.0.8-1"
   tenant         = var.tenant
   name           = var.name
   environment    = var.environment
