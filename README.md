@@ -5,7 +5,7 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "rds" {
   source         = "magicorntech/rds/aws"
-  version        = "0.1.0"
+  version        = "0.2.0"
   tenant         = var.tenant
   name           = var.name
   environment    = var.environment
@@ -23,12 +23,13 @@ module "rds" {
   port                         = 5432
   instance_type                = "db.t4g.small"
   engine                       = "postgres" # mysql or mariadb
-  engine_version               = "15.4"
+  engine_version               = "16.3"
   maintenance_window           = "sun:02:00-sun:03:00"
   backup_window                = "01:00-02:00"
   backup_retention_period      = 7
   allow_major_version_upgrade  = false
   auto_minor_version_upgrade   = false
+  deploy_rds_proxy             = false
   deletion_protection          = true
   performance_insights_enabled = false
   apply_immediately            = true
@@ -53,14 +54,14 @@ module "rds" {
   target_value           = 50
   scale_in_cooldown      = 300
   scale_out_cooldown     = 300
-  aurora_parameter_group = "aurora-postgresql14"
+  aurora_parameter_group = "aurora-postgresql16"
 
   # RDS Configuration (If =! Aurora)
   allocated_storage     = 20
   max_allocated_storage = 1000
   storage_type          = "gp3"
   storage_throughput    = null
-  parameter_group       = "postgres14"
+  parameter_group       = "postgres16"
 }
 ```
 

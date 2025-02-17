@@ -19,6 +19,7 @@ variable "backup_window" {}
 variable "backup_retention_period" {}
 variable "allow_major_version_upgrade" {}
 variable "auto_minor_version_upgrade" {}
+variable "deploy_rds_proxy" {}
 variable "deletion_protection" {}
 variable "performance_insights_enabled" {}
 variable "apply_immediately" {}

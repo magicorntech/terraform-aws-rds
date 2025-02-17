@@ -77,3 +77,37 @@ resource "aws_ssm_parameter" "main_db_pass" {
     Terraform   = "yes"
   }
 }
+
+resource "aws_ssm_parameter" "main_db_proxy" {
+  count       = (var.deploy_rds_proxy == true) ? 1 : 0
+  name        = "/${var.tenant}/${var.name}/${var.environment}/rds/${var.database_name}/proxy"
+  description = "Managed by Magicorn"
+  type        = "SecureString"
+  value       = aws_db_proxy.main[0].endpoint
+
+  tags = {
+    Name        = "${var.tenant}-${var.name}-${var.environment}-rds-${var.database_name}-proxy"
+    Tenant      = var.tenant
+    Project     = var.name
+    Environment = var.environment
+    Maintainer  = "Magicorn"
+    Terraform   = "yes"
+  }
+}
+
+resource "aws_ssm_parameter" "main_db_proxy_ro" {
+  count       = (var.deploy_rds_proxy == true) ? 1 : 0
+  name        = "/${var.tenant}/${var.name}/${var.environment}/rds/${var.database_name}/proxy-ro"
+  description = "Managed by Magicorn"
+  type        = "SecureString"
+  value       = aws_db_proxy_endpoint.main_ro[0].endpoint
+
+  tags = {
+    Name        = "${var.tenant}-${var.name}-${var.environment}-rds-${var.database_name}-proxy-ro"
+    Tenant      = var.tenant
+    Project     = var.name
+    Environment = var.environment
+    Maintainer  = "Magicorn"
+    Terraform   = "yes"
+  }
+}
