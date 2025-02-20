@@ -13,6 +13,10 @@ resource "aws_db_proxy" "main" {
     iam_auth    = "DISABLED"
   }
 
+  lifecycle {
+    ignore_changes = [ auth ]
+  }
+
   tags = {
     Name        = "${var.tenant}-${var.name}-rds-${var.database_name}-proxy-${var.environment}"
     Tenant      = var.tenant
@@ -91,6 +95,10 @@ resource "aws_iam_role_policy" "rds_proxy_policy" {
   count = var.deploy_rds_proxy ? 1 : 0
   name  = "${var.tenant}-${var.name}-rds-${var.database_name}-proxy-policy-${var.environment}"
   role  = aws_iam_role.rds_proxy_role[0].id
+
+  lifecycle {
+    ignore_changes = [ policy ]
+  }
 
   policy = jsonencode({
     Version = "2012-10-17"
