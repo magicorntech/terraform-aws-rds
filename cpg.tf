@@ -12,6 +12,16 @@ resource "aws_rds_cluster_parameter_group" "main" {
     }
   }
 
+  dynamic "parameter" {
+    for_each = (var.cluster_parameter)
+
+    content {
+      name         = parameter.value.name
+      value        = parameter.value.value
+      apply_method = parameter.value.apply_method
+    }
+  }
+
   tags = {
     Name        = "${var.tenant}-${var.name}-rds-${var.database_name}-cpg-${var.environment}"
     Tenant      = var.tenant

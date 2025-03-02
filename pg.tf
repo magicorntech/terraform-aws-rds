@@ -13,7 +13,7 @@ resource "aws_db_parameter_group" "main" {
   }
 
   dynamic "parameter" {
-    for_each = var.parameter
+    for_each = (var.instance_parameter)
 
     content {
       name         = parameter.value.name
