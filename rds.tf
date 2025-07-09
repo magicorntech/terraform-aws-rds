@@ -70,6 +70,12 @@ resource "aws_rds_cluster" "main" {
   vpc_security_group_ids          = [aws_security_group.main.id]
   apply_immediately               = var.apply_immediately
 
+  lifecycle {
+    ignore_changes = [
+      restore_to_point_in_time
+    ]
+  }
+
   tags = {
     Name        = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}"
     Tenant      = var.tenant
