@@ -58,6 +58,11 @@ module "rds" {
   scale_out_cooldown     = 300
   aurora_parameter_group = "aurora-postgresql16"
 
+  # RDS Configuration (Aurora Serverless v2, requires aurora_cluster = true)
+  serverless_enabled      = false
+  serverless_min_capacity = 0.5
+  serverless_max_capacity = 1
+
   # RDS Configuration (If =! Aurora)
   allocated_storage     = 20
   max_allocated_storage = 1000
@@ -70,3 +75,4 @@ module "rds" {
 ## Notes
 1) Works better with magicorn-aws-kms module.
 2) Supports RDS and Aurora for both MySQL and PostgreSQL engines.
+3) Supports Aurora Serverless v2. Set `aurora_cluster = true` and `serverless_enabled = true`, then tune `serverless_min_capacity`/`serverless_max_capacity` (in ACUs). `instance_type` is ignored for cluster instances while serverless is enabled (AWS uses `db.serverless`). Make sure `engine_version` is a Serverless v2 compatible version for the chosen engine.

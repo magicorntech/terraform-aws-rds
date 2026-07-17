@@ -38,3 +38,22 @@ variable "storage_throughput" {}
 variable "parameter_group" {}
 variable "cluster_parameter" {}
 variable "instance_parameter" {}
+
+# RDS Configuration (Aurora Serverless v2)
+variable "serverless_enabled" {
+  description = "Enable Aurora Serverless v2 for the cluster instances. Requires aurora_cluster = true."
+  type        = bool
+  default     = false
+}
+
+variable "serverless_min_capacity" {
+  description = "Minimum Aurora Capacity Units (ACUs) for Aurora Serverless v2. Only used when serverless_enabled = true."
+  type        = number
+  default     = 0.5
+}
+
+variable "serverless_max_capacity" {
+  description = "Maximum Aurora Capacity Units (ACUs) for Aurora Serverless v2. Only used when serverless_enabled = true."
+  type        = number
+  default     = 1
+}
