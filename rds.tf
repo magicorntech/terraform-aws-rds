@@ -70,6 +70,14 @@ resource "aws_rds_cluster" "main" {
   vpc_security_group_ids          = [aws_security_group.main.id]
   apply_immediately               = var.apply_immediately
 
+  dynamic "serverlessv2_scaling_configuration" {
+    for_each = (var.serverless_enabled == true) ? [true] : []
+    content {
+      min_capacity = var.serverless_min_capacity
+      max_capacity = var.serverless_max_capacity
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       restore_to_point_in_time
@@ -89,7 +97,7 @@ resource "aws_rds_cluster" "main" {
 resource "aws_rds_cluster_instance" "main" {
   count                        = local.node_count
   identifier                   = "${var.tenant}-${var.name}-${var.database_name}-${var.environment}-${count.index + 1}"
-  instance_class               = var.instance_type
+  instance_class               = (var.serverless_enabled == true) ? "db.serverless" : var.instance_type
   cluster_identifier           = aws_rds_cluster.main[0].id
   engine                       = aws_rds_cluster.main[0].engine
   engine_version               = aws_rds_cluster.main[0].engine_version
